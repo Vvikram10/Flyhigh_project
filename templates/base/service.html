@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+<title>{% block title %}Services{% endblock title %}</title>
+{% block content %}
+    <div class="container px-4 py-5">
+        <h1 class="text-center"><img
+            src="{% static "images/log.png" %}"
+            class="image mb-2"
+            height="40px"
+            width="40px"
+            alt="logo"
+          /></h1>
+        <h3 class="py-2 border-bottom bg-dark bg-gradient border-dark shadow-sm text-center text-white">Aviation Airline</h3>
+    
+        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+          <div class="col d-flex flex-column align-items-start gap-2">
+            <h2 class="fw-bold text-danger text-body-emphasis">Our Services</h2>
+            <p class="text-body-secondary">At the core of our reservation services lies a commitment to reliability, security, and data privacy. Utilizing industry-leading technology and adherence to stringent security protocols, we safeguard passenger information and transactions, ensuring peace of mind for both airlines and travelers alike</p>
+            {% comment %} <a href="#" class="btn btn-primary btn-lg">Primary button</a> {% endcomment %}
+          </div>
+    
+          <div class="col">
+            <div class="row row-cols-1 row-cols-sm-2 g-4">
+              <div class="col d-flex flex-column gap-2">
+                <div class="feature-icon-small d-inline-flex align-items-center  fs-4 rounded-3"><i class="fa-solid fa-plane-departure fs-1" style="color: #dd0828;"></i>
+                </div>
+                <h4 class="fw-semibold mb-0 text-body-emphasis">Flight booking</h4>
+                <p class="text-body-secondary">Passengers can search for flights based on their preferred dates, destinations, and other criteria, and book tickets online.</p>
+              </div>
+    
+              <div class="col d-flex flex-column gap-2">
+                <div class="feature-icon-small d-inline-flex align-items-center  fs-1 rounded-3">
+                    <i class="fa-regular fa-money-bill-1 fs-1" style="color: #e4111c;"></i>
+                </div>
+                <h4 class="fw-semibold mb-0 text-body-emphasis">Fare Comparison</h4>
+                <p class="text-body-secondary">The reservation system allows passengers to compare fares across different flights and cabin classes, helping them find the best deals.</p>
+              </div>
+    
+              <div class="col d-flex flex-column gap-2">
+                <div class="feature-icon-small d-inline-flex align-items-center  fs-4 rounded-3">
+                    <i class="fa-solid fa-wheelchair fs-1" style="color: #df1111;"></i>
+                </div>
+                <h4 class="fw-semibold mb-0 text-body-emphasis">Accessibility Features</h4>
+                <p class="text-body-secondary">Reservation systems should comply with accessibility standards, ensuring that passengers with disabilities can easily book flights and access necessary assistance.</p>
+              </div>
+    
+              <div class="col d-flex flex-column gap-2">
+                <div class="feature-icon-small d-inline-flex align-items-center  fs-4 rounded-3">
+                 <i class="fa-regular fa-envelope fs-1" style="color: #d51010;"></i>
+                </div>
+                <h4 class="fw-semibold mb-0 text-body-emphasis">Customer Support</h4>
+                <p class="text-body-secondary">Reservation systems provide access to customer support channels such as live chat, email, and phone support, allowing passengers to get assistance with their bookings or other inquiries.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<section id="testimonial">
+    <div class="container my-3">
+        <section>
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-10 col-xl-8 text-center">
+                <h3 class="mb-4 py-2 bg-dark bg-gradient text-white border-bottom border-dark shadow-sm">Testimonials</h3>
+                <p class="mb-4 pb-2 mb-md-5 pb-md-0">
+                    These heartfelt testimonials are a testament to the exceptional service and dedication to passenger satisfaction that define <span class="text-danger">Flyhigh Aviation</span>. Join our community of satisfied travelers and experience the difference with <span class="text-danger">Flyhigh Aviation</span>.
+                </p>
+              </div>
+            </div>
+          
+            <div class="row text-center">
+              <div class="col-md-4 mb-5 mb-md-0">
+                <div class="d-flex justify-content-center mb-4">
+                  <img src="{% static "images/pari.jpeg" %}"
+                    class="rounded-circle shadow-1-strong" width="100" height="100" />
+                </div>
+                <h5 class="mb-3">Parikshit Dinkar</h5>
+                <h6 class="text-danger mb-3">Web Developer</h6>
+                <p class="px-xl-3">
+                 Airlines made my journey unforgettable! Comfortable seats, friendly staff, and impeccable service. Can't wait to fly with them again.
+                </p>
+                
+              </div>
+              <div class="col-md-4 mb-5 mb-md-0">
+                <div class="d-flex justify-content-center mb-4">
+                  <img src="{% static "images/bhupendra.jpeg" %}"
+                    class="rounded-circle shadow-1-strong" width="100" height="100" />
+                </div>
+                <h5 class="mb-3">Bhupendra Singh Kushwah</h5>
+                <h6 class="text-danger mb-3">Backend Developer</h6>
+                <p class="px-xl-3">
+                  Airlines was a breath of fresh air! Smooth check-in, delightful in-flight experience, and a hassle-free trip. Simply outstanding! and feel happy journey.
+                </p>
+               
+              </div>
+              <div class="col-md-4 mb-0">
+                <div class="d-flex justify-content-center mb-4">
+                  <img src="{% static "images/prakash1.jpeg" %}"
+                    class="rounded-circle shadow-1-strong" width="100" height="100" />
+                </div>
+                <h5 class="mb-3 ">Prakash Kushwaha</h5>
+                <h6 class="text-danger mb-3">Full Stack Developer</h6>
+                <p class="px-xl-3">
+                  Airlines exceeded my expectations! From seamless booking to friendly service and on-time arrivals, they made flying a breeze. Highly recommended.
+                </p>
+               
+              </div>
+            </div>
+          </section>
+        </div>
+</section>
+
+{% endblock  %}

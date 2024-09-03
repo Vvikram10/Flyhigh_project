@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+    }
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+        border-radius: 0.25rem; /* Optional: to match card border radius */
+        padding: 20px; /* Optional: add some padding for spacing */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+    }
+    .card-body img {
+        border-radius: 50%;
+    }
+</style>
+<section class="section-content padding-y bg" style="min-height: 80vh;">
+
+    <div class="container-fluid my-2">
+        <div class="row">
+            {% include 'base/dashboard_sidebar.html' %}
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header bg-dark bg-gradient text-white">
+                        <strong class="d-inline-block mr-3">Dashboard Logged in as:</strong>
+                        <span>{{ user.first_name }}</span>
+                    </header>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 mb-4">
+                                <div class="card border-dark text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Ticket</h5>
+                                        <h4>{{ orders_count }}</h4>
+                                        {% comment %} <a href="{% url 'my_orders' %}" class="btn btn-primary">View Orders</a> {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="card-body border-dark">
+                                    <table class="table table-bordered table-striped">
+                                        <tbody>
+                                            <!-- Display Profile Picture -->
+                                            <tr>
+                                                <th class="text-center bg-dark bg-gradient text-white" scope="row" colspan="2">
+                                                    <img src="{{ userprofile.profile_picture.url }}" alt="User Profile Picture" width="100" height="100">
+                                                </th>
+                                            </tr>
+                                
+                                            <!-- Display User's Name -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">Name</th>
+                                                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                            </tr>
+                                
+                                            <!-- Display User's Email -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">Email</th>
+                                                <td>{{ user.email }}</td>
+                                            </tr>
+                                
+                                            <!-- Display User's Phone Number -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">Phone Number</th>
+                                                <td>{{ user.phone_number }}</td>
+                                            </tr>
+                                
+                                            <!-- Display Address Line 1 -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">Address Line 1</th>
+                                                <td>{{ userprofile.address_line_1 }}</td>
+                                            </tr>
+                                
+                                            <!-- Display Address Line 2 -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">Address Line 2</th>
+                                                <td>{{ userprofile.address_line_2 }}</td>
+                                            </tr>
+                                
+                                            <!-- Display City -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">City</th>
+                                                <td>{{ userprofile.city }}</td>
+                                            </tr>
+                                
+                                            <!-- Display State -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">State</th>
+                                                <td>{{ userprofile.state }}</td>
+                                            </tr>
+                                
+                                            <!-- Display Country -->
+                                            <tr>
+                                                <th class="bg-dark bg-gradient text-white" scope="row">Country</th>
+                                                <td>{{ userprofile.country }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> <!-- row.// -->
+                    </div> <!-- card-body .// -->
+                </article> <!-- order-group.// -->
+            </main>
+        </div> <!-- row.// -->
+    </div>
+</section>
+{% endblock %}

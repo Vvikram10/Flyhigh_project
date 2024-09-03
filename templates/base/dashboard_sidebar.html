@@ -1,0 +1,11 @@
+<aside class="col-md-3 my-1 ">
+    <!-- SIDEBAR -->
+    <ul class="list-group ">
+        <a class="list-group-item bg-dark bg-gradient text-white {% if request.path == '/' or 'dashboard' in request.path %} active {% endif %}" href="{% url 'dashboard' %}"> Dashboard </a>
+        <a class="list-group-item bg-dark bg-gradient text-white {% if 'my_orders' in request.path %} active {% endif %}" href="{% url 'my_orders' %}"> My Tickets </a>
+       
+        <a class="list-group-item bg-dark bg-gradient text-white{% if 'edit_profile' in request.path %} active {% endif %}" href="{% url 'edit_profile' %}"> Edit Profile </a>
+        <a class="list-group-item bg-dark bg-gradient text-white{% if 'change_password' in request.path %} active {% endif %}" href="{% url 'change_password' %}"> Change Password </a>
+        
+    </ul>
+</aside>

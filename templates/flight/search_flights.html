@@ -1,0 +1,80 @@
+
+    {% extends "base.html" %}
+    {% load static %}
+    {% block title %}Search Flights{% endblock title %}
+    {% block content %}
+    <style>
+        body {
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+            min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+        }
+        .card {
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+            border-radius: 0.25rem; /* Optional: to match card border radius */
+            padding: 20px; /* Optional: add some padding for spacing */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+            min-height: 80vh;
+        }
+    </style>
+    <div class="container card  my-4">
+        <div class="card-header bg-dark bg-gradient text-white text-center my-3">
+            <h5 class="">Search Flights</h5>
+        </div>
+        
+        <div class="">
+            <form method="get" action="{% url 'search_flights' %}" class="mb-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" name="source" class="form-control border-dark fw-bold" placeholder="Enter source from " value="{{ request.GET.source }}">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="destination" class="form-control border-dark fw-bold" placeholder="Enter destination to " value="{{ request.GET.destination }}">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary fw-bold w-100">Search Flight</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+       <div class="card-body fw-bold">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="bg-dark bg-gradient text-white">Flight No</th>
+                        <th class="bg-dark bg-gradient text-white">Flight Name</th>
+                        <th class="bg-dark bg-gradient text-white">Company</th>
+                        <th class="bg-dark bg-gradient text-white">Source</th>
+                        <th class="bg-dark bg-gradient text-white">Destination</th>
+                        <th class="bg-dark bg-gradient text-white">Departure Time</th>
+                        <th class="bg-dark bg-gradient text-white">Arrival Time</th>
+                        <th class="bg-dark bg-gradient text-white">Availability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in flights %}
+                        <tr>
+                            <td>{{ flight.flight_no }}</td>
+                            <td>{{ flight.flight_name }}</td>
+                            <td>{{ flight.company.company_name }}</td>
+                            <td>{{ flight.source.city }}</td>
+                            <td>{{ flight.destination.city }}</td>
+                            <td>{{ flight.departure_time }}</td>
+                            <td>{{ flight.arrival_time }}</td>
+                            <td>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'check_availability' flight_id=flight.flight_no %}" class="btn btn-info btn-sm">Check Availability</a>
+                                {% else %}
+                                    <span class="text-danger">Login to check availability</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+       </div>
+      
+    </div>
+    {% endblock content %}

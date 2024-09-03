@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aerodrum List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Aerodrum List</h1>
+        <a href="{% url 'aerodrum_create' %}" class="btn btn-primary mb-3">Create New Aerodrum</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aerodrum in aerodrums %}
+                <tr>
+                    <td>{{ aerodrum.aerodrum_id }}</td>
+                    <td>{{ aerodrum.aerodrum_name }}</td>
+                    <td>{{ aerodrum.city }}</td>
+                    <td>{{ aerodrum.state }}</td>
+                    <td>
+                        <a href="{% url 'aerodrum_update' aerodrum.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'aerodrum_delete' aerodrum.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

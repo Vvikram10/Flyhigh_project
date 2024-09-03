@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+    min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+}
+.card {
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+    border-radius: 0.25rem; /* Optional: to match card border radius */
+    padding: 20px; /* Optional: add some padding for spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+}
+.btn-custom{
+  width: 150px;
+}
+</style>
+<section class="section-conten padding-y" style="min-height:90vh">
+
+<!-- ============================ COMPONENT LOGIN   ================================= -->
+
+{% if request.GET.command == 'verification' %}
+
+<div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
+Thank you for registering with us. We have sent you a verification email to your email address [{{ request.GET.email }}]
+<br><br>
+Already verified? <a href="{% url 'login' %}">Login</a>
+</div>
+
+{% else %}
+
+	<div class="card mx-auto border-dark shadow-sm" style="max-width: 450px; margin-top:50px;">
+    <div class="card-header bg-dark bg-gradient text-white text-center">
+    
+      <h4 class="card-title my-1">Sign in</h4>
+    </div>
+      <div class="card-body fw-bold border-dark">
+      <form action="" method="POST">
+        {% csrf_token %}
+          <div class="form-group my-1">
+			 <input type="email" class="form-control border-dark" placeholder="Email Address" name="email">
+          </div> <!-- form-group// -->
+          <div class="form-group my-2">
+			<input type="password" class="form-control border-dark" placeholder="Password" name="password">
+          </div> <!-- form-group// -->
+
+           <!-- form-group form-check .// -->
+          <div class="form-group my-2 d-flex justify-content-between">
+              <button type="submit" class="btn btn-primary btn-custom"> Login </button>
+              <a href="{% url "forget_password" %}" class="text-decoration-none">Forget Password</a>
+          </div> <!-- form-group// -->
+          <p class="text-center my-2">Don't have account? <a href="{% url 'register' %}" class="text-decoration-none">Sign up</a></p>
+      </form>
+      </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+
+     
+     <br><br>
+<!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+{% endif %}
+
+</section>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Search Flights{% endblock title %}
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+    }
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+        border-radius: 0.25rem; /* Optional: to match card border radius */
+        padding: 20px; /* Optional: add some padding for spacing */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+        min-height: 80vh;
+    }
+</style>
+    <div class="container card my-3">
+       <div class="card-header bg-dark bg-gradient text-white text-center">
+        <h5>Seat Availability for Flight: {{ flight.flight_name }}</h5>
+       </div>
+       <div class="card-body fw-bold">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="bg-dark bg-gradient text-white">No</th>
+                    <th class="bg-dark bg-gradient text-white">Class</th>
+                    <th class="bg-dark bg-gradient text-white">Total Seats</th>
+                    <th class="bg-dark bg-gradient text-white">Booked Seats</th>
+                    <th class="bg-dark bg-gradient text-white">Available Seats</th>
+                    <th class="bg-dark bg-gradient text-white">Fare</th>
+                    <th class="bg-dark bg-gradient text-white">Booked Seat Numbers</th> <!-- New column for booked seat numbers -->
+                    <th class="bg-dark bg-gradient text-white">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in availability %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.class_name }}</td>
+                        <td>{{ item.total_seats }}</td>
+                        <td>{{ item.booked_seats }}</td>
+                        <td>{{ item.available_seats }}</td>
+                        <td> &#8377; {{ item.fare }}</td>
+                        <td>
+                            {% if item.booked_seat_numbers %}
+                                {{ item.booked_seat_numbers|join:", " }}
+                            {% else %}
+                                None
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.available_seats > 0 %}
+                                <form method="post" action="{% url 'book_ticket' flight.flight_no item.flight_class_id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">Book Now</button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-danger" disabled>Not Available</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       </div>
+    </div>
+{% endblock %} 
+
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Seat Availability</title>
+</head>
+<body>
+    <h1>Seat Availability for Flight {{ flight.flight_name }}</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Total Seats</th>
+                <th>Booked Seats</th>
+                <th>Available Seats</th>
+                <th>Fare</th>
+                <th>Booked Seat Numbers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for seat in availability %}
+                <tr>
+                    <td>{{ seat.class_name }}</td>
+                    <td>{{ seat.total_seats }}</td>
+                    <td>{{ seat.booked_seats }}</td>
+                    <td>{{ seat.available_seats }}</td>
+                    <td>{{ seat.fare }}</td>
+                    <td>
+                        <ul>
+                            {% for seat_number in seat.booked_seat_numbers %}
+                                <li>{{ seat_number }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html> {% endcomment %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Class List</h1>
+        <a href="{% url 'class_create' %}" class="btn btn-primary mb-3">Add New Class</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Class ID</th>
+                    <th>Class Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class in classes %}
+                <tr>
+                    <td>{{ class.class_id }}</td>
+                    <td>{{ class.class_name }}</td>
+                    <td>
+                        <a href="{% url 'class_update' class.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'class_delete' class.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

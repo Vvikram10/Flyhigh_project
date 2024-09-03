@@ -1,0 +1,55 @@
+{% autoescape off %}
+
+Hi {{ user.first_name }},
+
+Thank you for your order! We have received your booking.
+
+**Booking Details:**
+
+- **Pnr Number:** {{ booking.pnr_number }}
+- **Flight:** {{ booking.flight }} ({{ booking.flight.source.aerodrum_name }} {{ booking.flight.source.city }} to {{ booking.flight.destination.aerodrum_name }} {{ booking.flight.destination.city }})
+- **Flight Class:** {{ booking.flight_class }}
+- **Seat Numbers:** {{ booking.seat_number }}
+- **Departure Time:** {{ booking.flight.departure_time }}
+- **Arrival Time:** {{ booking.flight.arrival_time }}
+- **Flight Day:** {{ flight_day }}
+
+**Customer Details:**
+
+- **Customer Email:** {{ booking.email_id }}
+- **Customer Name:** {{ booking.customer_name }}
+- **Customer Contact:** {{ booking.contact_no }}
+- **Customer Age:** {{ booking.age }}
+- **Customer Gender:** {{ booking.gender }}
+- **Customer City:** {{ booking.city }}
+- **Customer Country:** {{ booking.country }}
+
+
+**Fare Details:**
+
+- **Total Amount:** {{ booking.total }}
+- **Tax:** {{ booking.tax }}
+- **Grand Total:** {{ booking.fare_total }}
+
+
+**Payment Details:**
+
+{% if payment %}
+- **Payment ID:** {{ payment.payment_id }}
+- **Payment Status:** {{ payment.status }}
+{% else %}
+Payment details are not available.
+{% endif %}
+
+{% if error_message %}
+**Error Message:**
+
+{{ error_message }}
+{% endif %}
+
+Thank you for choosing our service!
+
+Best regards,  
+The Flyhigh Aviation Team
+
+{% endautoescape %}

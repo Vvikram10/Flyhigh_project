@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Reservation Overview{% endblock title %}
+
+{% block content %}
+<style>
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+        border-radius: 0.25rem;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="container-fluid my-2">
+    <div class="row">
+        {% include "admin/sidebar.html" %}
+        <div class="col-md-9">
+            <div class="">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="text-center">Reserved vs Non-Reserved</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="reservedChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h3 class="text-center">Reservation Overview</h3>
+        </div>
+        <div class="card-body">
+            <div class="card-header bg-dark text-white">
+                <p class="text-center">Total Number of PNRs: {{ total_pnrs }}</p>
+            </div>
+            {% comment %} <p>Total Number of PNRs: {{ total_pnrs }}</p> {% endcomment %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>PNR Number</th>
+                        <th>Customer Name</th>
+                        <th>Flight</th>
+                        <th>Booking Date</th>
+                        <th>Status</th>
+                        <th>Reserved</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ order.pnr_number }}</td>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.flight }}</td>
+                        <td>{{ order.booking_date }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.is_reserved|yesno:"Yes,No" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const reservedData = JSON.parse('{{ reserved_data|escapejs }}'); // Parse JSON safely
+
+        const labels = reservedData.map(item => item.is_reserved ? 'Reserved' : 'Not Reserved');
+        const data = reservedData.map(item => item.count);
+
+        const ctx = document.getElementById('reservedChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar', // Change chart type to 'bar'
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Count',
+                    data: data,
+                    backgroundColor: ['#36A2EB', '#FF6384'], // Blue for reserved, red for not reserved
+                    borderColor: ['#36A2EB', '#FF6384'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Reserved Status'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Reservations'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                },
+            }
+        });
+    });
+</script>
+{% endblock content %}

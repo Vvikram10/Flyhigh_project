@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Search Pnr Status{% endblock title %}
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        min-height: 100vh; /* Ensure the gradient covers the full viewport height */
+    }
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+        border-radius: 0.25rem; /* Rounded corners */
+        padding: 20px; /* Padding for spacing */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        min-height: 80vh;
+    }
+</style>
+   <div class="container my-3">
+    <div class="card my-1">
+        <div class="card-header bg-dark text-white text-center">
+            <h5 class="mb-0">Ticket Details</h5>
+        </div>
+        <div class="card-body fw-bold">
+        <p><strong>PNR Number:</strong> {{ ticket.pnr_number }}</p>
+        <p><strong>Customer Email:</strong> {{ ticket.email_id }}</p>
+        <p><strong>Customer Name:</strong> {{ ticket.customer_name }}</p>
+        <p><strong>Contact No:</strong> {{ ticket.contact_no }}</p>
+        <p><strong>Customer age:</strong> {{ ticket.age }}</p>
+        <p><strong>Flight:</strong> {{ ticket.flight.flight_name }}</p>
+        <p><strong>Seat Number:</strong> {{ ticket.seat_number }}</p>
+        <p><strong>Fare Total:</strong> {{ ticket.fare_total }}</p>
+        <p><strong>Ticket Status:</strong> {{ ticket.status }}</p>
+        <p><strong>Booking Date:</strong> {{ ticket.booking_date }}</p>
+        </div>
+        <a href="{% url "home" %}" class="btn btn-secondary w-25">Back</a>
+    </div>
+   </div>
+   
+{% endblock %}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    {% load static %}
+    
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, {{ user.username }}!</p>
+    <p>Total Users: {{ user_count }}</p>
+    <p>Some other data: {{ some_other_data }}</p>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>

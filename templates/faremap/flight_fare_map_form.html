@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">{{ title }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="flight">Flight</label>
+                <select class="form-control" id="flight" name="flight" required>
+                    <option value="">Select flight</option>
+                    {% for flight in flights %}
+                    <option value="{{ flight.pk }}" {% if flight.pk == fare_map.flight.pk %}selected{% endif %}>{{ flight.flight_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="flight_class">Class</label>
+                <select class="form-control" id="flight_class" name="flight_class" required>
+                    <option value="">Select class</option>
+                    {% for flight_class in flight_classes %}
+                    <option value="{{ flight_class.pk }}" {% if flight_class.pk == fare_map.flight_class.pk %}selected{% endif %}>{{ flight_class.class_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="no_of_seats">Number of Seats</label>
+                <input type="number" class="form-control" id="no_of_seats" name="no_of_seats" value="{{ fare_map.no_of_seats|default:'' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="fare">Fare</label>
+                <input type="number" class="form-control" id="fare" name="fare" value="{{ fare_map.fare|default:'' }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'flight_fare_map_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

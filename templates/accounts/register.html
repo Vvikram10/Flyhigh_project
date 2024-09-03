@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+    }
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+        border-radius: 0.25rem; /* Optional: to match card border radius */
+        padding: 20px; /* Optional: add some padding for spacing */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+    }
+   
+    
+    
+    
+</style>
+
+
+<section class="section-content padding-y">
+
+<!-- ============================ COMPONENT REGISTER   ================================= -->
+
+    <div class="card mx-auto border-dark" style="max-width:720px; margin-top:60px;">
+      <article class="card-body fw-normal  ">
+    
+        {% comment %} <header class="mb-4"></header> {% endcomment %}
+        <div class="card-header bg-dark bg-gradient text-light text-center ">
+            <h5 class="card-title fw-bold ">Signup Here</h5>
+            {% include 'alerts.html' %}
+        </div>
+      <div class="card-body fw-bold">
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+
+            <!-- Row 1 -->
+            <div class="row my-1">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="id_first_name">First name</label>
+                    <input type="text" name="first_name" id="id_first_name" placeholder="First name" class="form-control border-dark" required>
+                </div> <!-- form-group end.// -->
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="id_last_name">Last name</label>
+                    <input type="text" name="last_name" id="id_last_name" placeholder="Last name" class="form-control border-dark" required>
+                </div> <!-- form-group end.// -->
+            </div> <!-- form-row end.// -->
+
+            <!-- Row 2 -->
+            <div class="row my-1">
+                <div class="form-group col-12 col-md-6">
+                    <label for="id_email">Email Address</label>
+                    <input type="email" name="email" id="id_email" placeholder="Email" class="form-control border-dark" required>
+                </div> <!-- form-group end.// -->
+                <div class="form-group col-12 col-md-6">
+                    <label for="id_phone_number">Phone Number</label>
+                    <input type="text" name="phone_number" id="id_phone_number" placeholder="Phone No" class="form-control border-dark" required>
+                </div> <!-- form-group end.// -->
+            </div> <!-- form-row end.// -->
+
+            <!-- Row 3 -->
+            <div class="row my-1">
+                <div class="form-group col-12 col-md-6">
+                    <label for="id_password">Create password</label>
+                    <input type="password" name="password" id="id_password" placeholder="Create password" class="form-control border-dark" required>
+                </div> <!-- form-group end.// -->
+                <div class="form-group col-12 col-md-6">
+                    <label for="id_confirm_password">Confirm password</label>
+                    <input type="password" name="confirm_password" placeholder="Confirm passwordme" id="id_confirm_password" class="form-control border-dark" required>
+                </div> <!-- form-group end.// -->
+            </div> <!-- form-row end.// -->
+
+            <div class="form-group  ">
+                <button type="submit" class="btn btn-primary btn-block w-100 mt-2"> Signup  </button>
+            </div> <!-- form-group// -->
+            <p class="text-center my-1 " >Have an account? <a href="{% url 'login' %}" class="text-decoration-none">Log In</a></p>
+        </form>
+      </div>
+    </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+    
+    <br><br>
+<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+</section>
+
+{% endblock %}

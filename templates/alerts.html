@@ -1,0 +1,30 @@
+{% if messages %}
+<div id="alert-container" class="alert-container">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} fade show" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Select all alerts within the alert-container
+      var alerts = document.querySelectorAll('#alert-container .alert');
+      
+      // Loop through each alert
+      alerts.forEach(function(alert) {
+          // Set a timeout to remove the alert after 2 seconds
+          setTimeout(function() {
+              alert.classList.remove('show');
+              alert.classList.add('fade');
+              // Ensure removal after fade effect completes
+              setTimeout(function() {
+                  alert.remove();
+              }, 600); // Delay to match the fade-out duration
+          }, 2000); // Time to wait before starting the fade-out
+      });
+  });
+  </script>
+  

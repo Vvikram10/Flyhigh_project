@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{% if existing_review %}Update{% else %}Add{% endif %} Review{% endblock title %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+    }
+    .contain{
+        min-height: 80vh; 
+    }
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+        border-radius: 0.25rem; /* Optional: to match card border radius */
+        padding: 20px; /* Optional: add some padding for spacing */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+        max-width: 600px; /* Set a max width for the card */
+        margin: auto; /* Center the card horizontally */
+    }
+    .star-rating {
+        direction: rtl;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        list-style: none;
+        margin: 0;
+    }
+    .star-rating input {
+        display: none;
+    }
+    .star-rating label {
+        font-size: 2em;
+        color: black;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+    }
+    .star-rating input:checked ~ label {
+        color: gold;
+    }
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: gold;
+    }
+</style>
+
+<div class="container contain">
+    <div class="card my-4">
+        <h5 class="card-header bg-dark bg-gradient text-white text-center">
+            {% if existing_review %}Update{% else %}Add{% endif %} Review
+        </h5>
+        <div class="card-body fw-bold">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject" class="form-control border-dark" maxlength="100" 
+                           value="{{ existing_review.subject|default:'' }}" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="review">Review:</label>
+                    <textarea id="review" name="review" class="form-control border-dark" maxlength="200" rows="2" 
+                              required>{{ existing_review.review|default:'' }}</textarea>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="rating">Rating:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5" 
+                               {% if existing_review.rating == 5 %}checked{% endif %} />
+                        <label for="star5" title="5 stars">&#9733;</label>
+                        <input type="radio" id="star4" name="rating" value="4" 
+                               {% if existing_review.rating == 4 %}checked{% endif %} />
+                        <label for="star4" title="4 stars">&#9733;</label>
+                        <input type="radio" id="star3" name="rating" value="3" 
+                               {% if existing_review.rating == 3 %}checked{% endif %} />
+                        <label for="star3" title="3 stars">&#9733;</label>
+                        <input type="radio" id="star2" name="rating" value="2" 
+                               {% if existing_review.rating == 2 %}checked{% endif %} />
+                        <label for="star2" title="2 stars">&#9733;</label>
+                        <input type="radio" id="star1" name="rating" value="1" 
+                               {% if existing_review.rating == 1 %}checked{% endif %} />
+                        <label for="star1" title="1 star">&#9733;</label>
+                    </div>
+                </div>
+
+                {% if user.is_authenticated %}
+            <button type="submit" class="btn btn-primary btn-block">
+                {% if existing_review %}Update{% else %}Submit{% endif %} Review
+            </button>
+        {% else %}
+            <p class="text-danger">Please <a href="{% url 'login' %}">log in</a> to give a rating.</p>
+        {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

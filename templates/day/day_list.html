@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Day List</h1>
+        <a href="{% url 'day_create' %}" class="btn btn-primary mb-3">Create New Day</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Day Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for day in days %}
+                <tr>
+                    <td>{{ day.pk }}</td>
+                    <td>{{ day.day_name }}</td>
+                    <td>
+                        <a href="{% url 'day_update' day.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'day_delete' day.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

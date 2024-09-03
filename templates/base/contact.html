@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock title %}
+{% load static %}
+{% block content %}
+    <style>
+        input[type=text], input[type=email], input[type=password], input[type=submit] {
+            width: 100%;
+            height: 50px;
+            border-color: black;
+            box-shadow: red;
+        }
+        .contain{
+            min-height: 80vh; 
+        }
+        .card {
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+            border-radius: 0.25rem; /* Optional: to match card border radius */
+            padding: 20px; /* Optional: add some padding for spacing */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+            max-width: 600px; /* Set a max width for the card */
+            margin: auto; /* Center the card horizontally */
+        }
+        .star-rating {
+            direction: rtl;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+            margin: 0;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+        .star-rating input:checked ~ label {
+            color: gold;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
+        
+    </style>
+    <section id="contact" class="my-3">
+   
+        <div class="container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.358319119893!2d<LONGITUDE_HERE>!3d<LATITUDE_HERE>!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDMwJzMwLjQiTiAxDjYwLjY!5e0!3m2!1sen!2sus!4v1620397005302!5m2!1sen!2sus" width="100%" height="350" style="border:1;" allowfullscreen="" loading="lazy" class="border-bottom border-dark shadow-sm"></iframe>
+        </div>
+       <div class="container">
+        <p>
+            "Welcome to our airline reservation service, where convenience meets excellence in air travel. With our user-friendly platform, booking your next flight is a breeze. Experience seamless reservation processes, real-time availability, and personalized services tailored to your preferences. Whether you're planning a business trip or a leisurely getaway, trust us to elevate your travel experience from start to finish. Join us and embark on a journey of efficiency, reliability, and unparalleled comfort. Your next adventure awaits with us."
+      
+            </p>
+       </div>
+       <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class=" text-white text-center"><img
+                    src="{% static "images/log.png" %}"
+                    class="image mb-2"
+                    height="40px"
+                    width="40px"
+                    alt="logo"></h1>
+                   <div class="card-header bg-dark bg-gradient text-white">
+                    <h3 class=" text-center border-bottom py-1 border-dark shadow-sm">Your Review is important for us</h3>
+                   </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="container contain">
+                    <div class="card my-4">
+                        <h5 class="card-header bg-dark bg-gradient text-white text-center">
+                            {% if existing_review %}Update{% else %}Add{% endif %} Review
+                        </h5>
+                        <div class="card-body fw-bold">
+                            <form method="POST">
+                                {% csrf_token %}
+                
+                                <div class="form-group mb-3">
+                                    <label for="subject">Subject:</label>
+                                    <input type="text" id="subject" name="subject" class="form-control border-dark" maxlength="100" 
+                                           value="{{ existing_review.subject|default:'' }}" required>
+                                </div>
+                
+                                <div class="form-group mb-3">
+                                    <label for="review">Review:</label>
+                                    <textarea id="review" name="review" class="form-control border-dark" maxlength="200" rows="2" 
+                                              required>{{ existing_review.review|default:'' }}</textarea>
+                                </div>
+                
+                                <div class="form-group mb-3">
+                                    <label for="rating">Rating:</label>
+                                    <div class="star-rating">
+                                        <input type="radio" id="star5" name="rating" value="5" 
+                                               {% if existing_review.rating == 5 %}checked{% endif %} />
+                                        <label for="star5" title="5 stars">&#9733;</label>
+                                        <input type="radio" id="star4" name="rating" value="4" 
+                                               {% if existing_review.rating == 4 %}checked{% endif %} />
+                                        <label for="star4" title="4 stars">&#9733;</label>
+                                        <input type="radio" id="star3" name="rating" value="3" 
+                                               {% if existing_review.rating == 3 %}checked{% endif %} />
+                                        <label for="star3" title="3 stars">&#9733;</label>
+                                        <input type="radio" id="star2" name="rating" value="2" 
+                                               {% if existing_review.rating == 2 %}checked{% endif %} />
+                                        <label for="star2" title="2 stars">&#9733;</label>
+                                        <input type="radio" id="star1" name="rating" value="1" 
+                                               {% if existing_review.rating == 1 %}checked{% endif %} />
+                                        <label for="star1" title="1 star">&#9733;</label>
+                                    </div>
+                                </div>
+                
+                                {% if user.is_authenticated %}
+                            <button type="submit" class="btn btn-primary btn-block">
+                                {% if existing_review %}Update{% else %}Submit{% endif %} Review
+                            </button>
+                        {% else %}
+                            <p class="text-danger">Please <a href="{% url 'login' %}">log in</a> to give a rating.</p>
+                        {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="col-md-6 col-lg-6 my-3">
+                <h5 class="text-danger">Feel free to reach out to us via any of the following channels:</h5>
+                <p>Feedback Form: Your feedback is invaluable to us. Share your thoughts, suggestions, or compliments through our online feedback form [Link to Feedback Form]. We appreciate every comment and use them to enhance our services continually.</p>
+                <p>Visit Us: If you prefer face-to-face assistance, you're always welcome to visit our offices located at [Provide Address]. Our staff will be delighted to assist you in person.</p>
+                <p>Thank you for choosing FlyHigh Airlines. We look forward to serving you soon!</p>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Bootstrap JS and dependencies -->
+
+       
+    </section>
+  
+{% endblock  %}

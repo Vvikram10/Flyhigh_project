@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cancel Ticket</title>
+</head>
+<body>
+    <h1>Confirm Cancellation</h1>
+    <p><strong>PNR Number:</strong> {{ ticket.pnr_number }}</p>
+    <p><strong>Customer Name:</strong> {{ ticket.customer_name }}</p>
+    <p><strong>Flight:</strong> {{ ticket.flight.flight_name }}</p>
+    <p><strong>Seat Number:</strong> {{ ticket.seat_number }}</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Cancellation</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Search Pnr no{% endblock title %}
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        min-height: 100vh; /* Ensure the gradient covers the full viewport height */
+    }
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+        border-radius: 0.25rem; /* Rounded corners */
+        padding: 20px; /* Padding for spacing */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        min-height: 80vh;
+    }
+</style>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white text-center">
+                    <h5 class="mb-0">Search Ticket by PNR Number</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="pnr_number" class="form-label">PNR Number:</label>
+                            <input type="text" id="pnr_number" name="pnr_number" class="form-control border-dark" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-25">Search</button>
+                        <a href="{% url "home" %}" class="btn btn-secondary w-25">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

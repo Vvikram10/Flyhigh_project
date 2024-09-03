@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Company List</h1>
+        <a href="{% url 'company_create' %}" class="btn btn-primary mb-3">Create New Company</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Company Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                <tr>
+                    <td>{{ company.pk }}</td>
+                    <td>{{ company.company_name }}</td>
+                    <td>
+                        <a href="{% url 'company_update' company.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'company_delete' company.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

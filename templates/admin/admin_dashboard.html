@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock title %}
+{% block content %}
+<style>
+  body {
+    {% comment %} background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */ {% endcomment %}
+    min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+}
+.card {
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+    border-radius: 0.25rem; /* Optional: to match card border radius */
+    padding: 20px; /* Optional: add some padding for spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+}
+.btn-custom{
+  width: 150px;
+}
+</style>
+
+    <!-- Main Content -->
+    
+        <div class="container-fluid my-2">
+             <!-- Add Graphs Section -->
+             <div class="row ">
+                {% include "admin/sidebar.html" %}
+                <div class="col-md-3">
+                    <div class="card-header bg-dark bg-gradient text-white">
+                        <h3 class="text-center">User Distribution</h3>
+                    </div>
+                    <canvas id="userPieChart"></canvas>
+                </div>
+                <div class="col-md-5">
+                    <div class="card-header bg-dark bg-gradient text-white">
+                        <h3 class="text-center">User Types Bar Chart</h3>
+                    </div>
+                    <canvas id="userBarChart"></canvas>
+                </div>
+               
+            </div>
+            <div class="container mt-5">
+                <div class="card-header bg-dark bg-gradient text-white">
+                    <h3 class="text-center py-1">User Details</h3>
+                </div>
+               <!-- Search Form -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <form method="GET">
+                        <input type="text" name="search" class="form-control" placeholder="Search by first name" value="{{ search_query }}">
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+            </div>
+                <div class="row mt-4">
+                     <!-- Search Form -->
+            
+                    {% for user in users %}
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card">
+                            <div class="card-body fw-bold">
+                                <h5 class="card-title"> <img src="{{ user.userprofile.profile_picture.url }}" alt="  " width="40" height="40" style="border-radius:50%;"> {{ user.username }}</h5>
+                                <p class="card-text"><strong>First Name:</strong> {{ user.first_name }}</p>
+                                <p class="card-text"><strong>Last Name:</strong> {{ user.last_name }}</p>
+                                <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                                <p class="card-text"><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+                                <a href="{% url 'delete_user_view' user.id %}" class="btn btn-danger">Delete User</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+
+           
+        </div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart.js Script -->
+    <script>
+        // Data for charts
+        const totalUsers = {{ total_users }};
+        const totalAdmins = {{ total_admins }};
+        const totalRegularUsers = {{ total_regular_users }};
+
+        // Pie Chart
+        const ctxPie = document.getElementById('userPieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: ['Admins', 'Regular Users'],
+                datasets: [{
+                    data: [totalAdmins, totalRegularUsers],
+                    backgroundColor: ['#FF6384', '#36A2EB'],
+                    hoverBackgroundColor: ['#FF6384', '#36A2EB']
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // Bar Chart
+        const ctxBar = document.getElementById('userBarChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Total Users', 'Admins', 'Regular Users'],
+                datasets: [{
+                    label: 'Number of Users',
+                    data: [totalUsers, totalAdmins, totalRegularUsers],
+                    backgroundColor: ['#4BC0C0', '#FF6384', '#36A2EB'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+       
+    </script>
+{% endblock %}

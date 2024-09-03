@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">{{ title }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="passport_id">Passport ID</label>
+                <input type="text" class="form-control" id="passport_id" name="passport_id" required>
+            </div>
+            <div class="form-group">
+                <label for="customer_name">Customer Name</label>
+                <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="email_id">Email ID</label>
+                <input type="email" class="form-control" id="email_id" name="email_id" required>
+            </div>
+            <div class="form-group">
+               <label for="contact_no">Contact No</label>
+                <input type="text" class="form-control" id="contact_no" name="contact_no" required>
+            </div>
+            <div class="form-group">
+                <label for="booking_date">Booking Date</label>
+                <input type="date" class="form-control" id="booking_date" name="booking_date" required>
+            </div>
+            <div class="form-group">
+                <label for="flight_class">Flight Class</label>
+                <select class="form-control" id="flight_class" name="flight_class" required>
+                    {% for flight_class in classes %}
+                    <option value="{{ flight_class.pk }}">{{ flight_class.class_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="flight">Flight</label>
+                <select class="form-control" id="flight" name="flight" required>
+                    {% for flight in flights %}
+                    <option value="{{ flight.pk }}">{{ flight.flight_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'customer_details_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

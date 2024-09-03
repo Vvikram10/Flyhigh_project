@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Fare Map List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Flight Fare Map List</h1>
+        <a href="{% url 'flight_fare_map_create' %}" class="btn btn-primary mb-3">Create New Flight Fare Map</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Flight</th>
+                    <th>Class</th>
+                    <th>No of Seats</th>
+                    <th>Fare</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fare_map in flight_fares %}
+                <tr>
+                    <td>{{ fare_map.ff_id }}</td>
+                    <td>{{ fare_map.flight.flight_name }}</td>
+                    <td>{{ fare_map.flight_class.class_name }}</td>
+                    <td>{{ fare_map.no_of_seats }}</td>
+                    <td>{{ fare_map.fare }}</td>
+                    <td>
+                        <a href="{% url 'flight_fare_map_update' fare_map.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'flight_fare_map_delete' fare_map.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

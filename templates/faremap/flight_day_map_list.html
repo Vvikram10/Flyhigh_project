@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Day Map List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Flight Day Map List</h1>
+        <a href="{% url 'flight_day_map_create' %}" class="btn btn-primary mb-3">Create New Flight Day Map</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Flight</th>
+                    <th>Day</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight_day_map in flight_days %}
+                <tr>
+                    <td>{{ flight_day_map.fd_id }}</td>
+                    <td>{{ flight_day_map.flight.flight_name }}</td>
+                    <td>{{ flight_day_map.day.day_name }}</td>
+                    <td>
+                        <a href="{% url 'flight_day_map_update' flight_day_map.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'flight_day_map_delete' flight_day_map.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

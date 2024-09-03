@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    body {
+      background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+      min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+  }
+  .card {
+      background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+      border-radius: 0.25rem; /* Optional: to match card border radius */
+      padding: 20px; /* Optional: add some padding for spacing */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+  }
+  .btn-custom{
+    width: 150px;
+  }
+  </style>
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Card for Booking Confirmation -->
+                <div class="card mb-4 ">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h5 class="py-2" >
+                            <a class="navbar-brand " >
+                              <img
+                                src="{% static "images/log.png" %}"
+                                class="image mb-1"
+                                height="25px"
+                                width="25px"
+                                alt="logo"
+                              /><span class="fw-bold fs-5"
+                                ><i
+                                  ><span class="text-danger fw-bold fs-5">Fly</span
+                                  ><span class="text-white">high</span></i
+                                ></span
+                              >
+                            </a>
+                          </h5>
+                        <h2>Booking Confirmation</h2>
+                    </div>
+                    <div class="card-body fw-bold">
+                       
+                       <div class="mb-5 py-3">
+                        <center>
+                            <i class="fas fa-check-circle" style="font-size: 72px; color: #28A745; margin-bottom: 20px;"></i>
+                        </center>
+                        <h4 class="card-title text-center">Thank you for your booking, {{ booking.customer_name }}!</h4>
+                        <p class="card-text text-center">Your booking has been confirmed. Here are the details:</p>
+                       </div>
+
+                        {% if error_message %}
+                            <div class="alert alert-danger text-center">
+                                {{ error_message }}
+                            </div>
+                        {% else %}
+                            <div class="row">
+                                <div class="col-md-6 d-flex justify-content-around">
+                                    <div>
+                                        <h5>Customer Details</h5>
+                                    <ul class="list-unstyled">
+                                        <li><strong>Email ID:</strong> {{ booking.email_id }}</li>
+                                        <li><strong>Name:</strong> {{ booking.customer_name }}</li>
+                                        <li><strong>Passport ID:</strong> {{ booking.passport_id }}</li>
+                                        <li><strong>Contact No:</strong> {{ booking.contact_no }}</li>
+                                        <li><strong>Age:</strong> {{ booking.age }}</li>
+                                        <li><strong>Gender:</strong> {{ booking.gender }}</li>
+                                        <li><strong>City:</strong> {{ booking.city }}</li>
+                                        <li><strong>Country:</strong> {{ booking.country }}</li>
+                                    </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-around">
+                                   <div>
+                                    <h5>Flight Details</h5>
+                                    <ul class="list-unstyled">
+                                        <li><strong>PNR Number:</strong> {{ pnr_number }}</li>
+                                        <li><strong>Flight:</strong> {{ flight }}</li>
+                                        <li><strong>Class:</strong> {{ flight_class }}</li>
+                                        <li><strong>Seat Number:</strong> {{ seat_numbers }}</li>
+                                        <li><strong>Source:</strong> {{ source }}</li>
+                                        <li><strong>Destination:</strong> {{ destination }}</li>
+                                        <li><strong>Flight Day:</strong> {{ flight_day }}</li>
+                                        <li><strong>Booking Date:</strong> {{ booking.booking_date }}</li>
+                                        <li><strong>Departure Time:</strong> {{ departure_time }}</li>
+                                        <li><strong>Arrival Time:</strong> {{ arrival_time }}</li>
+                                        
+                                        
+                                        
+                                    </ul>
+                                   </div>
+                                </div>
+                            </div>
+
+                          <div class="row">
+                            <div class="col-md-6 d-flex justify-content-around ">  
+                                <div>
+                                    <h5 class="mt-4">Payment Information</h5>
+                                    {% if payment %}
+                                    <ul class="list-unstyled">
+                                        <li><strong>Payment ID:</strong> {{ payment.payment_id }}</li>
+                                        <li><strong>Payment Method:</strong> {{ payment.payment_method }}</li>
+                                        <li><strong>Amount Paid:</strong> {{ payment.amount_paid }}</li>
+                                        <li><strong>Status:</strong> {{ payment.status }}</li>
+                                        <li><strong>Payment Date:</strong> {{ payment.created_at }}</li>
+                                    </ul>
+                                {% else %}
+                                    <p>No payment information available.</p>
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-around">
+                                <div>
+                                    <h5 class="mt-4">Fare Details</h5>
+                                    <ul class="list-unstyled">
+                                        <li><strong>Total:</strong> {{ total }}</li>
+                                        <li><strong>Tax:</strong> {{ tax }}</li>
+                                        <li><strong>Grand Total:</strong> {{ grand_total }}</li>
+                                    </ul>
+                                {% endif %}
+                                </div>
+                        </div>
+                          </div>
+
+                           
+
+                        <p class="text-center mt-3">You will receive an email confirmation shortly with further details.</p>
+
+                        <div class="text-center mt-4">
+                            <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

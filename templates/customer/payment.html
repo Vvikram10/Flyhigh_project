@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Payment{% endblock title %}
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+        min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+    }
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+        border-radius: 0.25rem; /* Optional: to match card border radius */
+        padding: 20px; /* Optional: add some padding for spacing */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+        min-height: 80vh;
+    }
+</style>
+<section class="section-content padding-y bg">
+    <div class="container card my-2">
+       <div class="card-header bg-dark bg-gradient text-white">
+        <h4 class="text-center my-1">Payment Details</h4>
+       </div>
+        <div class="row">
+            <aside class="col-lg-8">
+                <div class=" mb-4">
+                    <div class="card-body">
+                        <div class="card-header bg-dark bg-gradient text-white">
+                            <h5 >Flight Details</h5>
+                        </div>
+                        <p class="card-text mb-2"><strong>From:</strong> {{ flight_source }}</p>
+                        <p class="card-text mb-2"><strong>To:</strong> {{ flight_destination }}</p>
+                        <p class="card-text mb-2"><strong>Flight Number:</strong> {{ booking.flight.flight_name }}</p>
+                        <p class="card-text mb-2"><strong>Flight Class:</strong> {{ booking.flight_class.class_name }}</p>
+                        <p class="card-text mb-2"><strong>Total Fare:</strong> &#8377; {{ booking.fare_total }}</p>
+                        <p class="card-text mb-2"><strong>Payment Status:</strong> {{ booking.status }}</p>
+                    </div>
+                </div>
+                
+                <div class=" mb-4">
+                    <div class="card-body">
+                        <div class="card-header bg-dark bg-gradient text-white ">
+                            <h5 >Customer Details</h5>
+                        </div>
+                        <p class="card-text mb-2"><strong>Name:</strong> {{ booking.customer_name }}</p>
+                        <p class="card-text mb-2"><strong>Email:</strong> {{ booking.email_id }}</p>
+                        <p class="card-text mb-2"><strong>Contact No:</strong> {{ booking.contact_no }}</p>
+                        <p class="card-text mb-2"><strong>Age:</strong> {{ booking.age }}</p>
+                        <p class="card-text mb-2"><strong>Gender:</strong> {{ booking.gender }}</p>
+                        <p class="card-text mb-2"><strong>City:</strong> {{ booking.city }}</p>
+                        <p class="card-text mb-2"><strong>Country:</strong> {{ booking.country }}</p>
+                        <p class="card-text mb-2"><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+                    </div>
+                </div>
+                
+        
+            </aside>
+            <aside class="col-lg-4">
+
+				<div class="card my-1">
+                    <div class="card-header bg-dark bg-gradient text-white text-center">
+                        <h5 >Pay Here</h5>
+                    </div>
+					<div class="card-body">  
+						<dl class="dlist-align">
+							<dt>Total price:</dt> <dd class="text-right">&#8377; {{ booking.total }}</dd>
+							
+						</dl>
+						<dl class="dlist-align">
+							<dt>Tax:</dt>
+							<dd class="text-right"> &#8377; {{booking.tax}}</dd>
+						</dl>
+						<dl class="dlist-align">
+							<dt>Grand Total:</dt>
+							<dd class="text-right text-dark b"><strong>&#8377; {{ booking.fare_total }}</strong></dd>
+						</dl>
+						<hr>
+						<p class="text-center mb-3">
+							<img src="{% static '/images/misc/payments.png' %}" height="26">
+						</p>
+
+
+						<div id="paypal-button-container">
+							<!-- PayPal Button Will Load -->
+						</div>
+
+					</div> <!-- card-body.// -->
+				</div> <!-- card.// -->
+				{% comment %} <div class="alert alert-danger mt-3" role="alert">
+				  <b>Please Note: </b>This is a demo website. Do not try to make real payments.
+				</div> {% endcomment %}
+			</aside> <!-- col.// -->
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var short_token = "{{ booking.short_token }}";
+    var orderID = "{{ booking.pnr_number }}";
+    var url = "{% url 'process_payment' %}";
+    var redirect_url = "{% url 'booking_confirmation' booking.id %}";
+    var csrftoken = getCookie('csrftoken'); // Ensure csrftoken is defined correctly
+
+    console.log("Short token: ", short_token); // Print short_token
+    console.log("Order ID (PNR number): ", orderID); // Print PNR number
+    console.log("Process payment URL: ", url); // Print URL
+    console.log("Redirect URL: ", redirect_url); // Print redirect URL
+
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            console.log("Creating order with amount: ", "{{ booking.fare_total }}"); // Print amount
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: "{{ booking.fare_total }}"
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            console.log("Order approved: ", data); // Print order details
+            return actions.order.capture().then(function(details) {
+                console.log("Order captured: ", details); // Print capture details
+                
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        "X-CSRFToken": csrftoken, // Ensure csrftoken is included
+                    },
+                    body: JSON.stringify({
+                        orderID: orderID,  // PNR number (order ID)
+                        short_token: short_token,
+                        transID: details.id,  // PayPal transaction ID
+                        payment_method: 'PayPal',
+                        status: details.status,
+                    }),
+                })
+                .then(response => {
+                    console.log("Response Status: ", response.status); // Print HTTP response status
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Payment response data: ", data); // Print payment response data
+                    window.location.href = redirect_url + '?order_number=' + data.pnr_number + '&payment_id=' + data.transID;
+                })
+                .catch(error => {
+                    console.error("Error in fetch request: ", error); // Print fetch error
+                });
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+
+
+{% endblock %}

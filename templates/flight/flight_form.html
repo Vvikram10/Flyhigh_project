@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">{{ title }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="flight_name">Flight Name</label>
+                <input type="text" class="form-control" id="flight_name" name="flight_name" value="{{ flight.flight_name|default:'' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Company</label>
+                <select class="form-control" id="company" name="company" required>
+                    <option value="">Select company</option>
+                    {% for company in companies %}
+                        <option value="{{ company.pk }}" {% if flight.company.pk == company.pk %}selected{% endif %}>{{ company.company_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="source">Source</label>
+                <select class="form-control" id="source" name="source" required>
+                    <option value="">Select source</option>
+                    {% for aerodrum in aerodrums %}
+                        <option value="{{ aerodrum.pk }}" {% if flight.source.pk == aerodrum.pk %}selected{% endif %}>{{ aerodrum.aerodrum_name }}, {{ aerodrum.city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <select class="form-control" id="destination" name="destination" required>
+                    <option value="">Select destination</option>
+                    {% for aerodrum in aerodrums %}
+                        <option value="{{ aerodrum.pk }}" {% if flight.destination.pk == aerodrum.pk %}selected{% endif %}>{{ aerodrum.aerodrum_name }}, {{ aerodrum.city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="departure_time">Departure Time</label>
+                <input type="time" class="form-control" id="departure_time" name="departure_time" value="{{ flight.departure_time|default:'' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="arrival_time">Arrival Time</label>
+                <input type="time" class="form-control" id="arrival_time" name="arrival_time" value="{{ flight.arrival_time|default:'' }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'flight_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

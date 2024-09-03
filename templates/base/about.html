@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+<title>{% block title %}About{% endblock title %}</title>
+{% block content %}
+<style>
+    .star-rating {
+        font-size: 1.5rem;
+        color: #ddd;
+    }
+    
+    .star-rating .fa-star {
+        color: #ffc107;
+    }
+    
+    .star-rating .fa-star.checked {
+        color: #ffc107;
+    }
+    
+    .card {
+        background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+        border-radius: 0.25rem;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<section id="intro" class="py-2 mt-2 text-center container bg-dark bg-gradient text-white shadow-sm rounded">
+    <h1 class="text-white"><img src="{% static "images/log.png" %}" class="image mb-2" height="40px" width="40px" alt="logo"></h1>
+    <h3 class="text-light shadow-sm">About us <span class="fw-bold fs-4"><i><span class="text-danger fw-bold fs-3">Fly</span><span class="text-white">high</span></i></span> Aviation</h3>
+</section>
+
+<div class="container bg-light text-dark my-2 py-2  fw-bold">
+    <div class="row">
+        <div class="col-lg-12 ">
+            <p>FlyHigh Aviation is your go-to airline for affordable and convenient air travel across India. With a commitment to providing low-cost options for domestic travel, we aim to make exploring India more accessible to everyone.</p>
+            <p>Founded with the vision of making air travel affordable for every Indian, FlyHigh Aviation has quickly become a trusted name in the industry. Our focus on providing budget-friendly fares without compromising on safety or comfort has earned us the loyalty of thousands of passengers.</p>
+            <h3 class="text-danger">Our Mission</h3>
+            <p>At FlyHigh Aviation, our mission is to make travel dreams a reality for every Indian by offering affordable and reliable air travel solutions. We strive to connect people to their desired destinations while providing a seamless and enjoyable flying experience.</p>
+            <h3 class="text-danger">Our Services</h3>
+            <ul>
+                <li><strong class="text-danger">Affordable Fares:</strong> We pride ourselves on offering some of the lowest fares in the industry, making air travel accessible to a wide range of travelers.</li>
+                <li><strong class="text-danger">Extensive Route Network:</strong> With routes covering major cities and popular tourist destinations across India, we provide convenient connectivity for our passengers.</li>
+                <li><strong class="text-danger">Comfortable Cabin:</strong> Our aircraft are equipped with comfortable seating and modern amenities to ensure a pleasant flying experience for all passengers.</li>
+                <li><strong class="text-danger">Excellent Customer Service:</strong> Our dedicated team of professionals is committed to providing exceptional customer service and assistance to our passengers throughout their journey.</li>
+            </ul>
+            <h3 class="text-danger">Why Choose Us?</h3>
+            <ul>
+                <li><strong class="text-danger">Affordability:</strong> We offer some of the lowest fares in the industry, allowing you to travel more while spending less.</li>
+                <li><strong class="text-danger">Reliability:</strong> With a focus on safety and punctuality, you can trust FlyHigh Aviation to get you to your destination on time and in comfort.</li>
+                <li><strong class="text-danger">Convenience:</strong> Our extensive route network and convenient flight schedules make it easy to plan your travel itinerary.</li>
+                <li><strong class="text-danger">Customer Satisfaction:</strong> We prioritize the satisfaction of our passengers and strive to exceed their expectations at every step of their journey.</li>
+            </ul>
+            <p>Experience the joy of hassle-free travel with FlyHigh Aviation and explore the beauty and diversity of India without breaking the bank.</p>
+        </div>
+    </div>
+</div>
+
+<section class="ratings my-4">
+    <div class="container bg-light rounded p-4">
+        <div class="card-header bg-dark bg-gradient text-white text-center py-3 my-1">
+            <h4>Our Reviews</h4>
+        </div>
+
+        {% if existing_reviews %}
+            <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for review in existing_reviews %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <div class="d-flex align-items-center justify-content-center my-3 p-3 border">
+                                {% if review.image %}
+                                    <img src="{{ review.image.url }}" class="img-fluid rounded-circle mr-3" alt="Review Image" style="width: 100px; height: 100px;">
+                                {% endif %}
+                                <div class="card w-50">
+                                    <div class="card-body fw-bold border-dark">
+                                        <img src="{{ review.user.userprofile.profile_picture.url }}" class="my-1" alt="User Profile Picture" width="50" height="50" style="border-radius:50%;">
+                                        <span class="mx-2">{{ review.user.first_name }}</span>
+                                        <h5 class="card-title"> {{ review.subject }}</h5>
+                                        <p class="card-text">Review: {{ review.review }}</p>
+                                        <p class="card-text">Rating: {{ review.rating }} <i class="fa fa-star text-warning"></i></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No reviews yet. Be the first to leave a review!</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Deletion</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Confirm Deletion</h1>
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Are you sure you want to delete this flight?</h4>
+            <p><strong>Flight Name:</strong> {{ object.flight_name }}</p>
+            <p><strong>Company:</strong> {{ object.company.company_name }}</p>
+            <p><strong>Source:</strong> {{ object.source.aerodrum_name }}, {{ object.source.city }}</p>
+            <p><strong>Destination:</strong> {{ object.destination.aerodrum_name }}, {{ object.destination.city }}</p>
+            <p><strong>Departure Time:</strong> {{ object.departure_time }}</p>
+            <p><strong>Arrival Time:</strong> {{ object.arrival_time }}</p>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a href="{% url 'flight_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+    <div class="container">
+        <h4 class="text-center mb-20">Payment Successful</h4>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-header">Booking Details</h5>
+                        <p class="card-text mb-2"><strong>PNR Number:</strong> {{ booking.pnr_number }}</p>
+                        <p class="card-text mb-2"><strong>From:</strong> {{ flight_source }}</p>
+                        <p class="card-text mb-2"><strong>To:</strong> {{ flight_destination }}</p>
+                        <p class="card-text mb-2"><strong>Flight Number:</strong> {{ booking.flight.flight_name }}</p>
+                        <p class="card-text mb-2"><strong>Flight Class:</strong> {{ booking.flight_class.class_name }}</p>
+                        <p class="card-text mb-2"><strong>Total Fare:</strong> ${{ booking.fare_total }}</p>
+                        <p class="card-text mb-2"><strong>Payment Status:</strong> Success</p>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-header">Customer Details</h5>
+                        <p class="card-text mb-2"><strong>Name:</strong> {{ booking.customer_name }}</p>
+                        <p class="card-text mb-2"><strong>Email:</strong> {{ booking.email_id }}</p>
+                        <p class="card-text mb-2"><strong>Contact No:</strong> {{ booking.contact_no }}</p>
+                        <p class="card-text mb-2"><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Thank you for booking with us! Your payment was successful. You will receive a confirmation email shortly. If you have any questions or need further assistance, feel free to contact us.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
