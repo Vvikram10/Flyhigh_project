@@ -109,7 +109,8 @@
         <!-- Admin/Superuser -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ user.userprofile.profile_picture.url }}" alt="" width="30" height="30" style="border-radius:50%;"> Welcome, {{ user.first_name }}
+                <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'images/log.png' %}{% endif %}" alt="Profile Picture" width="30" height="30" style="border-radius:50%;">
+                    Welcome, {{ user.first_name }}
             </a>
             <ul class="dropdown-menu bg-gradient">
                 <li><a class="dropdown-item fw-bold" href="{% url 'admin_dashboard' %}"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</a></li>
@@ -120,7 +121,8 @@
         <!-- Staff/Admin -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ user.userprofile.profile_picture.url }}" alt="" width="30" height="30" style="border-radius:50%;"> Welcome, {{ user.first_name }}
+                <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'images/log.png' %}{% endif %}" alt="Profile Picture" width="30" height="30" style="border-radius:50%;">
+                    Welcome, {{ user.first_name }}
             </a>
             <ul class="dropdown-menu bg-gradient">
                 <li><a class="dropdown-item fw-bold" href="{% url 'admin_dashboard' %}"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</a></li>
@@ -131,7 +133,9 @@
         <!-- Regular User -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ user.userprofile.profile_picture.url }}" alt="" width="30" height="30" style="border-radius:50%;"> Welcome, {{ user.first_name }}
+                <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'images/log.png' %}{% endif %}" alt="Profile Picture" width="30" height="30" style="border-radius:50%;">
+                    Welcome, {{ user.first_name }}
+
             </a>
             <ul class="dropdown-menu bg-gradient">
                 <li><a class="dropdown-item fw-bold" href="{% url 'dashboard' %}"><i class="fas fa-sign-out-alt"></i> Dashboard</a></li>

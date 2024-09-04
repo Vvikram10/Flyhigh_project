@@ -148,7 +148,7 @@ def day_delete(request, pk):
     if request.method == 'POST':
         day.delete()
         return redirect('day_list')
-    return render(request, 'confirm_delete.html', {'object': day})
+    return render(request, 'day/confirm_delete.html', {'object': day})
 
 # FlightMaster Views
 def flight_list(request):

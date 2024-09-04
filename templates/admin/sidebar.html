@@ -1,12 +1,14 @@
-
-<aside class="col-md-3 my-1 ">
+<aside class="col-md-3 my-1">
     <!-- SIDEBAR -->
-    <ul class="list-group ">
-        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if request.path == '/' or 'admin_dashboard' in request.path %} active {% endif %}" href="{% url 'admin_dashboard' %}"> Dashboard </a>
-        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'review_dashboard' in request.path %} active {% endif %}" href="{% url 'review_dashboard' %}"> Review</a>
-       
-        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white{% if 'reservation' in request.path %} active {% endif %}" href="{% url 'reservation' %}"> Reservation </a>
-        {% comment %} <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white{% if 'change_password' in request.path %} active {% endif %}" href="{% url 'change_password' %}"> Change Password </a> {% endcomment %}
-        
+    <ul class="list-group">
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if request.path == '/' or 'admin_dashboard' in request.path %} active {% endif %}" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'review_dashboard' in request.path %} active {% endif %}" href="{% url 'review_dashboard' %}">Review</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'reservation' in request.path %} active {% endif %}" href="{% url 'reservation' %}">Reservation</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'class_list' in request.path %} active {% endif %}" href="{% url 'class_list' %}">Flight Class</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'company_list' in request.path %} active {% endif %}" href="{% url 'company_list' %}">Flight Company</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'day_list' in request.path %} active {% endif %}" href="{% url 'day_list' %}">Flight Day</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'flight_day_map_list' in request.path %} active {% endif %}" href="{% url 'flight_day_map_list' %}">Flight Map</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'flight_fare_map_list' in request.path %} active {% endif %}" href="{% url 'flight_fare_map_list' %}">Fare Map</a>
+        <a class="list-group-item text-decoration-none bg-dark bg-gradient text-white {% if 'flight_list' in request.path %} active {% endif %}" href="{% url 'flight_list' %}">Flight List</a>
     </ul>
 </aside>

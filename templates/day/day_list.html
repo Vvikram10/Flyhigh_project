@@ -1,36 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day List</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1 class="my-4">Day List</h1>
-        <a href="{% url 'day_create' %}" class="btn btn-primary mb-3">Create New Day</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Day Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for day in days %}
-                <tr>
-                    <td>{{ day.pk }}</td>
-                    <td>{{ day.day_name }}</td>
-                    <td>
-                        <a href="{% url 'day_update' day.pk %}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="{% url 'day_delete' day.pk %}" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{% extends 'base.html' %}
+{% block title %} Day List{% endblock title %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+    min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+}
+.card {
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Fresh blue gradient */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+}
+.btn-custom {
+    width: 150px;
+}
+</style>
+<div class="container-fluid my-1" style="min-height: 80vh;">
+    <div class="row">
+        {% include "admin/sidebar.html" %}
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header bg-dark bg-gradient text-white">
+                    <h5 class="my-2 py-2">Day List</h5>
+                </div>
+                <div class="card-body fw-bold">
+                    <a href="{% url 'day_create' %}" class="btn btn-primary my-2">Create New Day</a>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="bg-dark bg-gradient text-white">ID</th>
+                                <th class="bg-dark bg-gradient text-white">Day Name</th>
+                                <th class="bg-dark bg-gradient text-white">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for day in days %}
+                            <tr>
+                                <td>{{ day.pk }}</td>
+                                <td>{{ day.day_name }}</td>
+                                <td>
+                                    <a href="{% url 'day_update' day.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{% url 'day_delete' day.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

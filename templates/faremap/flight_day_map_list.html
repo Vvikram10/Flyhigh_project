@@ -1,38 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Day Map List</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1 class="my-4">Flight Day Map List</h1>
-        <a href="{% url 'flight_day_map_create' %}" class="btn btn-primary mb-3">Create New Flight Day Map</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Flight</th>
-                    <th>Day</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for flight_day_map in flight_days %}
-                <tr>
-                    <td>{{ flight_day_map.fd_id }}</td>
-                    <td>{{ flight_day_map.flight.flight_name }}</td>
-                    <td>{{ flight_day_map.day.day_name }}</td>
-                    <td>
-                        <a href="{% url 'flight_day_map_update' flight_day_map.pk %}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="{% url 'flight_day_map_delete' flight_day_map.pk %}" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{% extends 'base.html' %}
+{% block title %} Flight Day Map List {% endblock title %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #ff7e5f, #feb47b); /* Warm gradient background */
+    min-height: 80vh; /* Ensure the gradient covers the full viewport height */
+}
+.card {
+    background: linear-gradient(to right, #f8b500, #fceabb); /* Warm gradient for the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+}
+.btn-custom {
+    width: 150px;
+}
+</style>
+<div class="container-fluid my-1" style="min-height: 80vh;">
+    <div class="row">
+        {% include "admin/sidebar.html" %}
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header bg-dark bg-gradient text-white">
+                    <h5 class="my-2 py-2">Flight Day Map List</h5>
+                </div>
+                <div class="card-body fw-bold">
+                    <a href="{% url 'flight_day_map_create' %}" class="btn btn-primary my-2">Create New Flight Day Map</a>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="bg-dark bg-gradient text-white">ID</th>
+                                <th class="bg-dark bg-gradient text-white">Flight</th>
+                                <th class="bg-dark bg-gradient text-white">Day</th>
+                                <th class="bg-dark bg-gradient text-white">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for flight_day_map in flight_days %}
+                            <tr>
+                                <td>{{ flight_day_map.fd_id }}</td>
+                                <td>{{ flight_day_map.flight.flight_name }}</td>
+                                <td>{{ flight_day_map.day.day_name }}</td>
+                                <td>
+                                    <a href="{% url 'flight_day_map_update' flight_day_map.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{% url 'flight_day_map_delete' flight_day_map.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

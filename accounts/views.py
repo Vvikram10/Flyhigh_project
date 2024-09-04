@@ -211,7 +211,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)  # Log out the Account
-    return redirect('home')
+    return redirect('login')
 
 def admin_dashboard(request):
     User = get_user_model()
