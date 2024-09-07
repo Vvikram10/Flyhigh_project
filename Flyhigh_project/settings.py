@@ -26,9 +26,11 @@ SECRET_KEY = config('SECRET_KEY')
 # SECRET_KEY = 'django-insecure-lj()0$2qx@=zg!^b=h6=pb($hj$@v#v7(_6!eo9c@c-!s+ie2%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool) # True
+# DEBUG = config('DEBUG', default=True, cast=bool) # True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
+
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=lambda v: [s.strip() for s in v.split(',')])
 
 
@@ -105,11 +107,11 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('POSTGRES_DB'),
-#         'USER': config('POSTGRES_USER'),
-#         'PASSWORD': config('POSTGRES_PASSWORD'),
-#         'HOST': 'db',  # This matches the name of your PostgreSQL service in docker-compose.yml
-#         'PORT': '5432',
+#         'NAME': 'postgres',
+#         'USER': 'awsuser',
+#         'PASSWORD': 'Vik331285',
+#         'HOST': 'django-database.czg4iw8oow9c.ap-south-1.rds.amazonaws.com',
+#         'PORT': '5432'
 #     }
 # }
 
@@ -141,13 +143,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -160,7 +158,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# if 'AWS_ENV' in os.environ:
+#     ALLOWED_HOSTS += os.environ['AWS_ENV'].split(',')
 
+# Optional Debugging
+# DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
